@@ -275,7 +275,7 @@ GitHub:
 https://github.com/SadhvikaNallathigala
 
 LinkedIn:
-(Add your LinkedIn profile)
+https://www.linkedin.com/in/sadhvika-nallathigala/
 
 ---
 
