@@ -1,0 +1,370 @@
+{
+  "info": {
+    "_postman_id": "d9e8f0d1-6c8c-4c2e-b2b5-123456789abc",
+    "name": "ShopIt API Collection",
+    "description": "Postman Collection for ShopIt Microservices (CRM, E-Commerce, Payment)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "crmUrl",
+      "value": "http://localhost:8081"
+    },
+    {
+      "key": "ecommerceUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "paymentUrl",
+      "value": "http://localhost:8082"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "paymentId",
+      "value": "1"
+    },
+    {
+      "key": "orderId",
+      "value": "1"
+    },
+    {
+      "key": "productId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\":\"John Doe\",\n    \"email\":\"john@example.com\",\n    \"password\":\"Password@123\"\n}"
+            },
+            "url": {
+              "raw": "{{crmUrl}}/api/auth/register",
+              "host": [
+                "{{crmUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\":\"john@example.com\",\n    \"password\":\"Password@123\"\n}"
+            },
+            "url": {
+              "raw": "{{crmUrl}}/api/auth/login",
+              "host": [
+                "{{crmUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{ecommerceUrl}}/api/products",
+              "host": [
+                "{{ecommerceUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Product By Id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{ecommerceUrl}}/api/products/{{productId}}",
+              "host": [
+                "{{ecommerceUrl}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                "{{productId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\":\"Laptop\",\n    \"description\":\"Gaming Laptop\",\n    \"price\":65000,\n    \"stock\":10\n}"
+            },
+            "url": {
+              "raw": "{{ecommerceUrl}}/api/products",
+              "host": [
+                "{{ecommerceUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cart",
+      "item": [
+        {
+          "name": "Get Cart",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{ecommerceUrl}}/api/cart",
+              "host": [
+                "{{ecommerceUrl}}"
+              ],
+              "path": [
+                "api",
+                "cart"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Add To Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"productId\":1,\n    \"quantity\":2\n}"
+            },
+            "url": {
+              "raw": "{{ecommerceUrl}}/api/cart/add",
+              "host": [
+                "{{ecommerceUrl}}"
+              ],
+              "path": [
+                "api",
+                "cart",
+                "add"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Place Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"shippingAddress\":\"Hyderabad\"\n}"
+            },
+            "url": {
+              "raw": "{{ecommerceUrl}}/api/orders",
+              "host": [
+                "{{ecommerceUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Order",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{ecommerceUrl}}/api/orders/{{orderId}}",
+              "host": [
+                "{{ecommerceUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{{orderId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Cancel Order",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{ecommerceUrl}}/api/orders/{{orderId}}/cancel",
+              "host": [
+                "{{ecommerceUrl}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "{{orderId}}",
+                "cancel"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payment Service",
+      "item": [
+        {
+          "name": "Process Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"orderId\":101,\n    \"customerId\":1001,\n    \"amount\":500.0,\n    \"paymentMethod\":\"UPI\"\n}"
+            },
+            "url": {
+              "raw": "{{paymentUrl}}/payments/process",
+              "host": [
+                "{{paymentUrl}}"
+              ],
+              "path": [
+                "payments",
+                "process"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Payment By Id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{paymentUrl}}/payments/{{paymentId}}",
+              "host": [
+                "{{paymentUrl}}"
+              ],
+              "path": [
+                "payments",
+                "{{paymentId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Payment History",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{paymentUrl}}/payments/history",
+              "host": [
+                "{{paymentUrl}}"
+              ],
+              "path": [
+                "payments",
+                "history"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
